@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="redis," />
+  <meta name="keywords" content="web安全," />
 
 
 
@@ -94,18 +94,20 @@
 
 
 
-<meta name="description" content="zInter 求多个有序集合的交集 参数  keyOutput: 交集输出的集合arrayZSetKeys: 待求交集的集合arrayWeights: 输入集合的对应权重值aggregateFunction: 交集取定方法，默认sum,可选max,min   实例: 1234567891011121314$redis-&amp;gt;zAdd(&apos;k1&apos;, 2, &apos;k11&apos;);$redis-&amp;gt;zAdd">
-<meta name="keywords" content="redis">
+<meta name="description" content="回话是跟踪web程序常用的技术，用来跟踪用户的整个回话。回话机制主要有cookie和session。cookie通常在客户端记录信息确定用户身份，seesion通常在服务器端记录信息确定用户信息。">
+<meta name="keywords" content="web安全">
 <meta property="og:type" content="article">
-<meta property="og:title" content="zInter与zUnion的不同使用">
-<meta property="og:url" content="http://yoursite.com/2018/03/12/sort-redis/index.html">
+<meta property="og:title" content="Cookies和Session的区别">
+<meta property="og:url" content="http://yoursite.com/2018/04/02/cookie/index.html">
 <meta property="og:site_name" content="百里">
-<meta property="og:description" content="zInter 求多个有序集合的交集 参数  keyOutput: 交集输出的集合arrayZSetKeys: 待求交集的集合arrayWeights: 输入集合的对应权重值aggregateFunction: 交集取定方法，默认sum,可选max,min   实例: 1234567891011121314$redis-&amp;gt;zAdd(&apos;k1&apos;, 2, &apos;k11&apos;);$redis-&amp;gt;zAdd">
+<meta property="og:description" content="回话是跟踪web程序常用的技术，用来跟踪用户的整个回话。回话机制主要有cookie和session。cookie通常在客户端记录信息确定用户身份，seesion通常在服务器端记录信息确定用户信息。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-12T13:36:02.000Z">
+<meta property="og:image" content="https://images.cnblogs.com/cnblogs_com/andy-zhou/811282/o_Cookie_Session001.png">
+<meta property="og:updated_time" content="2018-04-02T13:53:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zInter与zUnion的不同使用">
-<meta name="twitter:description" content="zInter 求多个有序集合的交集 参数  keyOutput: 交集输出的集合arrayZSetKeys: 待求交集的集合arrayWeights: 输入集合的对应权重值aggregateFunction: 交集取定方法，默认sum,可选max,min   实例: 1234567891011121314$redis-&amp;gt;zAdd(&apos;k1&apos;, 2, &apos;k11&apos;);$redis-&amp;gt;zAdd">
+<meta name="twitter:title" content="Cookies和Session的区别">
+<meta name="twitter:description" content="回话是跟踪web程序常用的技术，用来跟踪用户的整个回话。回话机制主要有cookie和session。cookie通常在客户端记录信息确定用户身份，seesion通常在服务器端记录信息确定用户信息。">
+<meta name="twitter:image" content="https://images.cnblogs.com/cnblogs_com/andy-zhou/811282/o_Cookie_Session001.png">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/12/sort-redis/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/02/cookie/"/>
 
 
 
 
 
-  <title>zInter与zUnion的不同使用 | 百里</title>
+  <title>Cookies和Session的区别 | 百里</title>
   
 
 
@@ -273,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/sort-redis/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/cookie/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cyan">
@@ -290,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">zInter与zUnion的不同使用</h1>
+          <h1 class="post-title" itemprop="name headline">Cookies和Session的区别</h1>
         
 
         <div class="post-meta">
@@ -302,8 +304,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T20:45:55+08:00">
-                2018-03-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T21:29:00+08:00">
+                2018-04-02
               </time>
             
 
@@ -325,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/php-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">php-redis</span>
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
                   </a>
                 </span>
 
@@ -362,35 +364,36 @@
       
 
       
-        <h2 id="zInter-求多个有序集合的交集"><a href="#zInter-求多个有序集合的交集" class="headerlink" title="zInter 求多个有序集合的交集"></a><code>zInter</code> 求多个有序集合的交集</h2><ul>
-<li><p>参数</p>
-<blockquote>
-<p>keyOutput: 交集输出的集合<br>arrayZSetKeys: 待求交集的集合<br>arrayWeights: 输入集合的对应权重值<br>aggregateFunction: 交集取定方法，默认sum,可选max,min</p>
+        <blockquote>
+<p>回话是跟踪web程序常用的技术，用来跟踪用户的整个回话。回话机制主要有cookie和session。cookie通常在客户端记录信息确定用户身份，seesion通常在服务器端记录信息确定用户信息。</p>
 </blockquote>
-</li>
-<li><p>实例:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;zAdd(<span class="string">'k1'</span>, <span class="number">2</span>, <span class="string">'k11'</span>);</span><br><span class="line">$redis-&gt;zAdd(<span class="string">'k1'</span>, <span class="number">3</span>, <span class="string">'k13'</span>);</span><br><span class="line"></span><br><span class="line">$redis-&gt;zAdd(<span class="string">'k2'</span>, <span class="number">4</span>, <span class="string">'k11'</span>);</span><br><span class="line">$redis-&gt;zAdd(<span class="string">'k2'</span>, <span class="number">6</span>, <span class="string">'k14'</span>);</span><br><span class="line"></span><br><span class="line">$redis-&gt;zInter(</span><br><span class="line">    <span class="string">'k12'</span>,</span><br><span class="line">    <span class="keyword">array</span>(<span class="string">'k1'</span>, <span class="string">'k2'</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">    <span class="string">'max'</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">输出: <span class="keyword">array</span>(<span class="string">'k11'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="zUnion-求多个有序集合的并集"><a href="#zUnion-求多个有序集合的并集" class="headerlink" title="zUnion 求多个有序集合的并集 "></a><code>zUnion</code> 求多个有序集合的并集 </h2><ul>
-<li><p>参数</p>
+<a id="more"></a>
+<h3 id="Cookies回话机制"><a href="#Cookies回话机制" class="headerlink" title="Cookies回话机制"></a>Cookies回话机制</h3><p>web应用程序使用http协议进行数据传输。但是http协议是无状态的协议，一旦数据传输结束，服务器和客户端的连接就会关闭，再次交换数据时会再次建立连接。因此，服务器无法在连接上跟踪回话。<br>cookie技术是客户端的解决方案。cookie就是由服务器给客户端的特殊信息，这些特殊信息以文本文件的形式保存在客户端，客户端每次访问服务器都会带上这些特殊信息。cookie本质上可以看做http的扩展。有两个的http头设置和传递cookie，分别是set-cookie和cookie。<br>整个通讯过程可以有一张图描述：<br><img src="https://images.cnblogs.com/cnblogs_com/andy-zhou/811282/o_Cookie_Session001.png" alt="服务器和客户端通讯描述图"></p>
+<p>通讯过程分为四步：</p>
 <blockquote>
-<p>keyOutput: 并集输出的集合<br>arrayZSetKeys: 输入的集合<br>arrayWeights: 输入集合的对应权重值<br>aggregateFunction: 并集取定方法，默认sum,可选max,min</p>
-</blockquote>
-</li>
-<li><p>实例：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;zUnion(</span><br><span class="line">    <span class="string">'k21'</span>,</span><br><span class="line">    <span class="keyword">array</span>(<span class="string">'k1'</span>, <span class="string">'k2'</span>),</span><br><span class="line">    <span class="keyword">array</span>(<span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">    <span class="string">'max'</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">输出: <span class="keyword">array</span>(<span class="string">'k13'</span>, <span class="string">'k14'</span>, <span class="string">'k11'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>注意点(zInter,zUnion)：</p>
-</li>
-</ul>
 <ol>
-<li>如果是求1:1的sum交或并集时，后面两个参数可以省略</li>
-<li>需要使用aggregateFunction时，arrayWeights参数也要给出，即使是默认参数array(1, 1),否则方法无效</li>
+<li>客户端发送一个http请求到服务器</li>
+<li>服务器返回http响应到客户度，内含set-cookie头部</li>
+<li>客户端发送http请求到服务器，带上cookie信息</li>
+<li>服务器发送http响应至客户端</li>
 </ol>
-<ul>
-<li><code>zRevRange</code> 得到反序有序集合，结果与<code>zRange</code>相反</li>
-</ul>
+</blockquote>
+<h3 id="Cookie的不可跨域性"><a href="#Cookie的不可跨域性" class="headerlink" title="Cookie的不可跨域性"></a>Cookie的不可跨域性</h3><p>cookie具有不可跨域性。举个例子，Google会向客户端发送cookie，Baidu也会向客户端发送cookie，但是浏览器访问Google不会携带Baidu的cookie，浏览器访问Baidu也不会携带Google的cookie，也不能修改Google的cookie。</p>
+<h3 id="设置Cookie的所有属性"><a href="#设置Cookie的所有属性" class="headerlink" title="设置Cookie的所有属性"></a>设置Cookie的所有属性</h3><blockquote>
+<p><code>String name</code>: 该cookie的名称，一旦cookie创建完成，名称就不可修改<br><code>Object value</code>: cookie的值，如果是Unicode字符，需要字符编码，一般使用utf-8；如果是二进制字符，则需要BASE64编码<br><code>int maxAge</code>: cookie的失效时间，单位是秒。如果是整数，当前cookie&gt;maxAge，则失效；如果是负数，则表示临时cookie，当关闭浏览器，cookie就失效，浏览器也不会采取任何形式保存cookie信息；如果是0，则删除cookie。默认为-1。<br><code>boolean secure</code>:cookie是否是仅被安全协议传输。安全协议有HTTPS和SSL等。默认false<br><code>String path</code>: 该Cookie的使用路径。如果设置为“/sessionWeb/”，则只有contextPath为“/sessionWeb”的程序可以访问该Cookie。如果设置为“/”，则本域名下contextPath都可以访问该Cookie。注意最后一个字符必须为“/”<br><code>String domain</code>: 可以访问cookie的域名，如果设置‘.baidu.com’，则所有以‘.baidu.com’为结尾的域名都可以访问该域名<br><code>String comment</code>: cookie的用处说明<br><code>int version</code>: 该Cookie使&gt;用的版本号。0表示遵循Netscape的Cookie规范，1表示遵循W3C的RFC 2109规范</p>
+</blockquote>
+<h3 id="Session机制"><a href="#Session机制" class="headerlink" title="Session机制"></a>Session机制</h3><p><code>Session</code>是服务器端使用的一种记录客户端状态的机制，使用上比cookie简单，但是也增加了服务器的压力。<br>session是服务器端的一种解决方案，通过服务器保持状态。为了更高的存取速度，服务器一般把session存在内存中。为了防止内存溢出，服务器会把长时间没有活动的session从内存中删除，这个时间就是session的超过时间。如果超过了这个超过时间没有访问服务器，这个session就自动失效。</p>
+<h3 id="session对浏览器的要求"><a href="#session对浏览器的要求" class="headerlink" title="session对浏览器的要求"></a>session对浏览器的要求</h3><p>虽然session虽然保存在服务器中，但是session的正常运行还是需要浏览器的支持，session需要cookie使用cookie作为标识。因为HTTP协议无状态，session还是无法通过HTTP连接来判断是否为同一个用户。因此服务器向客户端浏览器发送一个名为JSESSIONID的Cookie，它的值为该Session的id<br>该cookie是服务器自动创建的，maxAge的值为-1，表示仅当前浏览器窗口有效，各浏览器窗口间不共享，关闭浏览器即失效。</p>
+<h3 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h3><p><code>session</code>虽然是保存在服务器中，但是在使用上对cookie还是有依赖关系。当浏览器禁用cookie时，session就会失效。<br>URL重写是对客户端不支持cookie的一种解决方案，将用户的sessionId重写到URL中，服务器通过解析重写的URL获取sessionId。</p>
+<h3 id="Cookie和Session的区别"><a href="#Cookie和Session的区别" class="headerlink" title="Cookie和Session的区别"></a>Cookie和Session的区别</h3><blockquote>
+<ol>
+<li>cookie保存在客户端，session保存在服务器中</li>
+<li>cookie的安全性不高，可以通过分析本地的cookie并进行cookie欺骗，考虑安全性使用sess</li>
+<li>session会在一定时间内保存在服务器中，当访问量增大时，会占用服务器的内存，考虑服务器的性能使用cookie</li>
+<li>单个cookie在浏览器中的大小限制是4k</li>
+</ol>
+</blockquote>
+<p><a href="http://www.cnblogs.com/andy-zhou/p/5360107.html" target="_blank" rel="noopener">原文参考</a></p>
 
       
     </div>
@@ -408,7 +411,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/redis/" rel="tag"># redis</a>
+            <a href="/tags/web安全/" rel="tag"># web安全</a>
           
         </div>
       
@@ -421,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/06/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/03/12/rop/" rel="next" title="rop签名算法PHP实现">
+                <i class="fa fa-chevron-left"></i> rop签名算法PHP实现
               </a>
             
           </div>
@@ -430,10 +433,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/12/rop/" rel="prev" title="rop签名算法PHP实现">
-                rop签名算法PHP实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -569,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#zInter-求多个有序集合的交集"><span class="nav-number">1.</span> <span class="nav-text">zInter 求多个有序集合的交集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zUnion-求多个有序集合的并集"><span class="nav-number">2.</span> <span class="nav-text">zUnion 求多个有序集合的并集 </span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookies回话机制"><span class="nav-number">1.</span> <span class="nav-text">Cookies回话机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie的不可跨域性"><span class="nav-number">2.</span> <span class="nav-text">Cookie的不可跨域性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置Cookie的所有属性"><span class="nav-number">3.</span> <span class="nav-text">设置Cookie的所有属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session机制"><span class="nav-number">4.</span> <span class="nav-text">Session机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session对浏览器的要求"><span class="nav-number">5.</span> <span class="nav-text">session对浏览器的要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL重写"><span class="nav-number">6.</span> <span class="nav-text">URL重写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie和Session的区别"><span class="nav-number">7.</span> <span class="nav-text">Cookie和Session的区别</span></a></li></ol></div>
             
 
           </div>
